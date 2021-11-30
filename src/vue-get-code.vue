@@ -50,7 +50,7 @@ export default {
     this.reset()
   },
   methods: {
-    async click() {
+    click() {
       if (this.enableCountdown) return
       if (this.disable) return
 
@@ -64,8 +64,17 @@ export default {
         }
       }, 1000)
 
-      await this.getCode().catch(() => {
-        alert('ca')
+      // vue-sfc-cli 对 async await 的支持还有问题，暂时换成 Promise 写法
+      new Promise((resolve, reject) => {
+        let result
+        try {
+          result = this.getCode() // getCode 可能是同步的，也可能是 Promise 异步函数
+        } catch (error) {
+          reject(error)
+        }
+
+        resolve(result)
+      }).catch(() => {
         this.reset()
       })
     },
