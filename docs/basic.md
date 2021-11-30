@@ -25,7 +25,11 @@ export default {
 
 <style>
 .vue-get-code {
-  color: #1673b1;
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
 }
 </style>
 ```
@@ -55,7 +59,11 @@ export default {
 
 <style>
 .vue-get-code {
-  color: #1673b1;
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
 }
 </style>
 ```
@@ -66,7 +74,7 @@ export default {
   <form>
     <input v-model="form.phone" placeholder="phone">
 
-    <vue-get-code :getCode="getCode" :interval="120" :disable="!form.phone">
+    <vue-get-code :getCode="getCode" :interval="5" :disable="!form.phone">
       <template v-slot:default>获取验证码(输入手机后才能点击获取验证码)</template>
       <template v-slot:countdown="child">
         请等待{{ child.data.interval - child.data.seconds }}秒
@@ -100,10 +108,15 @@ export default {
 
 <style>
 .vue-get-code {
-  color: #1673b1;
+  color: #1092ed;
+  cursor: pointer;
 }
 .vue-get-code.disable {
   color: gray;
+  cursor: not-allowed;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
 }
 </style>
 ```
