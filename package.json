@@ -1,0 +1,107 @@
+{
+  "name": "@en777/vue-get-code",
+  "version": "1.0.0",
+  "description": "",
+  "author": "https://github.com/En777",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/En777/vue-get-code.git"
+  },
+  "keywords": [
+    "vue",
+    "sfc",
+    "component"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "main": "dist/vue-get-code.umd.js",
+  "module": "dist/vue-get-code.esm.js",
+  "unpkg": "dist/vue-get-code.min.js",
+  "browser": {
+    "./sfc": "src/vue-get-code.vue"
+  },
+  "types": "src/vue-get-code.d.ts",
+  "scripts": {
+    "dev": "vue-styleguidist server",
+    "test": "jest --verbose",
+    "doc": "vue-styleguidist build",
+    "build": "npm run build:unpkg & npm run build:es & npm run build:umd & npm run doc",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/vue-get-code.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/vue-get-code.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/vue-get-code.min.js",
+    "stdver": "standard-version -m '[skip ci] chore(release): v%s'",
+    "release": "gren release --override"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/preset-env": "^7.4.3",
+    "@femessage/github-release-notes": "latest",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.5",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "file-loader": "^3.0.1",
+    "glob": "^7.1.3",
+    "husky": "1.3.1",
+    "jest": "^24.8.0",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "lint-staged": "^8.1.0",
+    "minimist": "^1.2.0",
+    "prettier": "1.18.2",
+    "rollup": "^2.41.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-vue": "^4.7.2",
+    "standard-version": "^6.0.1",
+    "stylelint": "^9.10.0",
+    "stylelint-config-standard": "^18.2.0",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.1",
+    "vue-styleguidist": "^3.16.3",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.29.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "vue-sfc-cli": "1.14.0",
+  "engines": {
+    "node": ">= 8.3.0",
+    "npm": ">= 3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again",
+      "pre-push": "yarn test"
+    }
+  },
+  "lint-staged": {
+    "*.@(md|json)": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.vue": [
+      "eslint --fix",
+      "prettier --write",
+      "stylelint --fix",
+      "git add"
+    ]
+  },
+  "gren": "@femessage/grenrc"
+}

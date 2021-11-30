@@ -1,0 +1,30 @@
+branches:
+  only:
+    - main
+language: node_js
+node_js:
+- lts/*
+git:
+  depth: 30
+install:
+- yarn --frozen-lockfile
+- yarn test
+script:
+- ./build.sh
+after_script:
+- ./notify.sh
+cache: yarn
+deploy:
+- provider: pages # you may delete this provider if you don't need deployment of github pages
+  local-dir: docs # https://docs.travis-ci.com/user/deployment/packagecloud/#specify-package-folder
+  github-token: $GITHUB_TOKEN
+  skip-cleanup: true
+  keep-history: true
+  on:
+    branch: main
+- provider: npm
+  email: levy9527@qq.com # use your own email
+  api_key: $NPM_TOKEN
+  skip-cleanup: true
+  on:
+    branch: main
