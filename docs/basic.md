@@ -68,6 +68,44 @@ export default {
 </style>
 ```
 
+### 如果已经获取过一次验证码，显示“重新获取”(修改默认文案)
+```vue
+<template>
+  <form>
+    <input placeholder="phone">
+    <vue-get-code :getCode="getCode" :interval="3">
+      <template v-slot:default="child">
+        {{ child.data.count <= 0 ? '获取验证码' : '重新获取' }}
+      </template>
+    </vue-get-code>
+  </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    getCode () {
+      let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
+      return fetch(mockApi)
+    }
+  }
+}
+</script>
+
+<style>
+.vue-get-code {
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
+}
+</style>
+```
+
 ### 高级：配置默认文字、倒计时文字、表单验证与获取验证码结合、event事件
 ```vue
 <template>
