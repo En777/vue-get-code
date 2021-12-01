@@ -6,7 +6,12 @@
     v-on="$listeners"
     @click="click"
   >
-    <slot v-if="!enableCountdown" name="default">获取验证码</slot>
+    <slot
+      v-if="!enableCountdown"
+      name="default"
+      :data="{interval, seconds, count}"
+      >获取验证码</slot
+    >
     <slot v-if="enableCountdown" name="countdown" :data="{interval, seconds}"
       >{{ interval - seconds }}S</slot
     >
@@ -35,7 +40,9 @@ export default {
     return {
       timer: null,
       seconds: 0,
-      enableCountdown: false
+      enableCountdown: false,
+      // 发送验证码的次数
+      count: 0
     }
   },
   watch: {
@@ -73,6 +80,7 @@ export default {
           this.reset()
         })
         .then(() => {
+          this.count++
           this.$emit('countdownBegin', this.seconds, this.interval)
 
           this.timer = setInterval(() => {
