@@ -109,7 +109,7 @@ export default {
 </style>
 ```
 
-vue 组件的 props 参数
+vue-get-code 组件的 props 参数
 ```
 // 发送验证码的 ajax 实现，函数请返回 Promise 对象
 getCode: {
