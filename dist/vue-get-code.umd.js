@@ -61,14 +61,7 @@
         if (this.enableCountdown) return;
         if (this.disable) return;
         this.seconds = 0;
-        this.enableCountdown = true;
-        this.timer = setInterval(function () {
-          _this.seconds++;
-
-          if (_this.seconds >= _this.interval || _this.disable) {
-            _this.reset();
-          }
-        }, 1000); // vue-sfc-cli 对 async await 的支持还有问题，暂时换成 Promise 写法
+        this.enableCountdown = true; // vue-sfc-cli 对 async await 的支持还有问题，暂时换成 Promise 写法
 
         new Promise(function (resolve, reject) {
           var result;
@@ -80,8 +73,30 @@
           }
 
           resolve(result);
-        })["catch"](function () {
+        })["catch"](function (error) {
+          _this.$emit('getCodeError', error);
+
           _this.reset();
+        }).then(function () {
+          _this.$emit('countdownBegin', _this.seconds, _this.interval);
+
+          _this.timer = setInterval(function () {
+            _this.seconds++;
+
+            if (_this.disable) {
+              _this.reset();
+
+              return;
+            }
+
+            _this.$emit('countdownUpdate', _this.seconds, _this.interval);
+
+            if (_this.seconds >= _this.interval) {
+              _this.$emit('countdownEnd', _this.seconds, _this.interval);
+
+              _this.reset();
+            }
+          }, 1000);
         });
       },
       reset: function reset() {
