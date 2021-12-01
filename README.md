@@ -1,15 +1,11 @@
-# vue-get-code
+# vue-get-code (获取短信验证码的 vue 组件)
 
-[![Build Status](https://badgen.net/travis/En777/vue-get-code/main)](https://travis-ci.com/En777/vue-get-code)
-[![NPM Download](https://badgen.net/npm/dm/@en777/vue-get-code)](https://www.npmjs.com/package/@en777/vue-get-code)
-[![NPM Version](https://badge.fury.io/js/%40en777%2Fvue-get-code.svg)](https://www.npmjs.com/package/@en777/vue-get-code)
-[![NPM License](https://badgen.net/npm/license/@en777/vue-get-code)](https://github.com/En777/vue-get-code/blob/main/LICENSE)
+[![NPM Download](https://badgen.net/npm/dm/vue-get-code)](https://www.npmjs.com/package/vue-get-code)
+[![NPM Version](https://badge.fury.io/js/vue-get-code.svg)](https://www.npmjs.com/package/vue-get-code)
+[![NPM License](https://badgen.net/npm/license/vue-get-code)](https://github.com/En777/vue-get-code/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/En777/vue-get-code/pulls)
-[![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
-short description + sample image(png/gif/mp4)
-
-## Table of Contents
+## Table of Contents 目录
 
 - [Introduction](#introduction)
 - [Features](#features)
@@ -20,31 +16,194 @@ short description + sample image(png/gif/mp4)
 - [Contributors](#contributors)
 - [License](#license)
 
-## Introduction
+## Introduction 介绍
 
-If there is no more words to write, this section can be deleted.
+获取短信验证码的 vue 组件（封装了发送验证码、倒计时，倒计时完成后可以重新发送……）。
 
-[⬆ Back to Top](#table-of-contents)
+非常简单，用起来很方便，非常灵活，支持复杂的场景。
 
-## Features
+获取短信验证码、获取邮件验证码，都可以使用这个组件。
 
-[⬆ Back to Top](#table-of-contents)
+## Features 特点
+vue-get-code 是一个非常灵活的获取短信验证码组件。
 
-## Install
+支持灵活的配置：
+- 倒计时的秒数，默认60秒，可按需设置
+- 发送验证码需要 ajax 调用接口，可以在 getCode() 函数中实现，过程由开发者实现，非常灵活，返回一个 Promise 对象即可，组件会等待函数，成功后会开始倒计时，失败了会结束倒计时。在此函数中，也可以做表单验证，真的非常灵活。
+- 调用者可以控制组件是否禁用
+- 组件的多种状态（发送验证码前、倒计时、禁用），要有对应class，控制样式非常方便
+- 可以定制发验证码之前的文字
+- 可以定制倒计时的文案
 
-[⬆ Back to Top](#table-of-contents)
+## Install 安装
 
-## Usage
+`npm install vue-get-code`
 
-[⬆ Back to Top](#table-of-contents)
+## Usage 使用
+
+### 基本用法
+```vue
+<template>
+  <form>
+    <input placeholder="phone">
+    <vue-get-code :getCode="getCode"/>
+  </form>
+</template>
+
+<script>
+import VueGetCode from 'vue-get-code'
+
+export default {
+  components: {
+    VueGetCode
+  },
+  methods: {
+    // 调用获取验证码的接口，此函数请返回 Promise 对象
+    getCode () {
+      let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
+      return fetch(mockApi)
+    }
+  }
+}
+</script>
+
+<style>
+.vue-get-code {
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
+}
+</style>
+```
+
+### 配置倒计时为120秒
+```vue
+<template>
+  <form>
+    <input placeholder="phone">
+    <vue-get-code :getCode="getCode" :interval="120" />
+  </form>
+</template>
+
+<script>
+export default {
+  methods: {
+    getCode () {
+      let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
+      return fetch(mockApi)
+    }
+  }
+}
+</script>
+
+<style>
+.vue-get-code {
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
+}
+</style>
+```
+
+vue 组件的 props 参数
+```
+// 发送验证码的 ajax 实现，函数请返回 Promise 对象
+getCode: {
+  required: true,
+  type: Function
+},
+// 倒计时的时长，单位：秒
+interval: {
+  default: 60,
+  type: Number
+},
+// 禁用，禁止点击
+disable: {
+  default: false,
+  type: Boolean
+}
+```
+
+### 高级：配置默认文字、倒计时文字、表单验证与获取验证码结合
+```vue
+<template>
+  <form>
+    <input v-model="form.phone" placeholder="phone">
+
+    <vue-get-code :getCode="getCode" :interval="5" :disable="!form.phone">
+      <template v-slot:default>获取验证码(输入手机后才能点击获取验证码)</template>
+      <template v-slot:countdown="child">
+        请等待{{ child.data.interval - child.data.seconds }}秒
+      </template>
+    </vue-get-code>
+  </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        phone: '',
+      }
+    }
+  },
+  methods: {
+    getCode () {
+      if (this.form.phone.length < 7) {
+        alert('请填写正确的手机号码')
+        throw '请填写正确的手机号码' // 抛出错误，中断 Promise chain
+      }
+
+      let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
+      return fetch(mockApi)
+    }
+  }
+}
+</script>
+
+<style>
+.vue-get-code {
+  color: #1092ed;
+  cursor: pointer;
+}
+.vue-get-code.disable {
+  color: gray;
+  cursor: not-allowed;
+}
+.vue-get-code.enable-countdown {
+  cursor: not-allowed;
+}
+</style>
+```
 
 ## Links
 
 - [docs](https://En777.github.io/vue-get-code/)
 
-[⬆ Back to Top](#table-of-contents)
-
 ## Contributing
+
+工程基于 https://github.com/FEMessage/vue-sfc-cli 创建的。
+
+简单使用示例：
+```
+# Install dependency
+yarn
+
+# Develop component
+yarn dev
+
+# Build
+yarn build
+
+# Ready to publish!
+# Or use `npm publish`
+yarn publish
+```
 
 For those who are interested in contributing to this project, such as:
 
