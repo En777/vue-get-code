@@ -28,6 +28,7 @@
   ],
   "main": "dist/vue-get-code.umd.js",
   "module": "dist/vue-get-code.esm.js",
+  "jsdelivr": "dist/vue-get-code.min.js",
   "unpkg": "dist/vue-get-code.min.js",
   "browser": {
     "./sfc": "src/vue-get-code.vue"
