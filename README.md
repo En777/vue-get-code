@@ -214,7 +214,7 @@ export default {
 
 - [docs](https://En777.github.io/vue-get-code/)
 
-## Contributing
+## Contributing 参与开发贡献
 
 工程基于 https://github.com/FEMessage/vue-sfc-cli 创建的。
 
@@ -244,8 +244,6 @@ For those who are interested in contributing to this project, such as:
 
 Please refer to our [contributing guide](https://github.com/FEMessage/.github/blob/main/CONTRIBUTING.md).
 
-[⬆ Back to Top](#table-of-contents)
-
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -256,10 +254,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-[⬆ Back to Top](#table-of-contents)
-
 ## License
 
 [MIT](./LICENSE)
-
-[⬆ Back to Top](#table-of-contents)
