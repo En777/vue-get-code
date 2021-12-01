@@ -68,17 +68,27 @@ export default {
 
         resolve(result)
       })
+        .catch(error => {
+          this.$emit('getCodeError', error)
+          this.reset()
+        })
         .then(() => {
+          this.$emit('countdownBegin', this.seconds, this.interval)
+
           this.timer = setInterval(() => {
             this.seconds++
+            if (this.disable) {
+              this.reset()
+              return
+            }
 
-            if (this.seconds >= this.interval || this.disable) {
+            this.$emit('countdownUpdate', this.seconds, this.interval)
+
+            if (this.seconds >= this.interval) {
+              this.$emit('countdownEnd', this.seconds, this.interval)
               this.reset()
             }
           }, 1000)
-        })
-        .catch(() => {
-          this.reset()
         })
     },
     reset() {
