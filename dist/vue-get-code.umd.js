@@ -19,6 +19,11 @@
   //
   //
   //
+  //
+  //
+  //
+  //
+  //
   var script = {
     name: 'VueGetCode',
     props: {
@@ -40,7 +45,9 @@
       return {
         timer: null,
         seconds: 0,
-        enableCountdown: false
+        enableCountdown: false,
+        // 发送验证码的次数
+        count: 0
       };
     },
     watch: {
@@ -78,6 +85,8 @@
 
           _this.reset();
         }).then(function () {
+          _this.count++;
+
           _this.$emit('countdownBegin', _this.seconds, _this.interval);
 
           _this.timer = setInterval(function () {
@@ -212,6 +221,12 @@
       }
     }, "span", _vm.$attrs, false), _vm.$listeners), [!_vm.enableCountdown ? _vm._t("default", function () {
       return [_vm._v("获取验证码")];
+    }, {
+      data: {
+        interval: _vm.interval,
+        seconds: _vm.seconds,
+        count: _vm.count
+      }
     }) : _vm._e(), _vm._v(" "), _vm.enableCountdown ? _vm._t("countdown", function () {
       return [_vm._v(_vm._s(_vm.interval - _vm.seconds) + "S")];
     }, {
