@@ -213,17 +213,13 @@ var __vue_render__ = function __vue_render__() {
     on: {
       click: _vm.click
     }
-  }, "span", _vm.$attrs, false), _vm.$listeners), [!_vm.enableCountdown ? _vm._t("default", function () {
-    return [_vm._v("获取验证码")];
-  }, {
+  }, "span", _vm.$attrs, false), _vm.$listeners), [!_vm.enableCountdown ? _vm._t("default", [_vm._v("获取验证码")], {
     data: {
       interval: _vm.interval,
       seconds: _vm.seconds,
       count: _vm.count
     }
-  }) : _vm._e(), _vm._v(" "), _vm.enableCountdown ? _vm._t("countdown", function () {
-    return [_vm._v(_vm._s(_vm.interval - _vm.seconds) + "S")];
-  }, {
+  }) : _vm._e(), _vm._v(" "), _vm.enableCountdown ? _vm._t("countdown", [_vm._v(_vm._s(_vm.interval - _vm.seconds) + "S")], {
     data: {
       interval: _vm.interval,
       seconds: _vm.seconds
