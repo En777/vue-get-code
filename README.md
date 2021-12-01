@@ -25,15 +25,19 @@
 获取短信验证码、获取邮件验证码，都可以使用这个组件。
 
 ## Features 特点
+
 vue-get-code 是一个非常灵活的获取短信验证码组件。
 
 支持灵活的配置：
-- 倒计时的秒数，默认60秒，可按需设置
+
+- 倒计时的秒数，默认 60 秒，可按需设置
 - 发送验证码需要 ajax 调用接口，可以在 getCode() 函数中实现，过程由开发者实现，非常灵活，返回一个 Promise 对象即可，组件会等待函数，成功后会开始倒计时，失败了会结束倒计时。在此函数中，也可以做表单验证，真的非常灵活。
 - 调用者可以控制组件是否禁用
-- 组件的多种状态（发送验证码前、倒计时、禁用），要有对应class，控制样式非常方便
+- 组件的多种状态（发送验证码前、倒计时、禁用），要有对应 class，控制样式非常方便
 - 可以定制发验证码之前的文字
 - 可以定制倒计时的文案
+- 倒计时有事件触发(countdownBegin/countdownUpdate/countdownEnd)
+- 获取验证码接口报错有事件触发(getCodeError)
 
 ## Install 安装
 
@@ -42,11 +46,12 @@ vue-get-code 是一个非常灵活的获取短信验证码组件。
 ## Usage 使用
 
 ### 基本用法
+
 ```vue
 <template>
   <form>
-    <input placeholder="phone">
-    <vue-get-code :getCode="getCode"/>
+    <input placeholder="phone" />
+    <vue-get-code :getCode="getCode" />
   </form>
 </template>
 
@@ -59,7 +64,7 @@ export default {
   },
   methods: {
     // 调用获取验证码的接口，此函数请返回 Promise 对象
-    getCode () {
+    getCode() {
       let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
       return fetch(mockApi)
     }
@@ -78,11 +83,12 @@ export default {
 </style>
 ```
 
-### 配置倒计时为120秒
+### 配置倒计时为 120 秒
+
 ```vue
 <template>
   <form>
-    <input placeholder="phone">
+    <input placeholder="phone" />
     <vue-get-code :getCode="getCode" :interval="120" />
   </form>
 </template>
@@ -90,7 +96,7 @@ export default {
 <script>
 export default {
   methods: {
-    getCode () {
+    getCode() {
       let mockApi = 'https://cdn.jsdelivr.net/npm/vue@2/package.json'
       return fetch(mockApi)
     }
@@ -110,6 +116,7 @@ export default {
 ```
 
 vue-get-code 组件的 props 参数
+
 ```
 // 发送验证码的 ajax 实现，函数请返回 Promise 对象
 getCode: {
@@ -129,13 +136,16 @@ disable: {
 ```
 
 ### 高级：配置默认文字、倒计时文字、表单验证与获取验证码结合
+
 ```vue
 <template>
   <form>
-    <input v-model="form.phone" placeholder="phone">
+    <input v-model="form.phone" placeholder="phone" />
 
     <vue-get-code :getCode="getCode" :interval="5" :disable="!form.phone">
-      <template v-slot:default>获取验证码(输入手机后才能点击获取验证码)</template>
+      <template v-slot:default
+        >获取验证码(输入手机后才能点击获取验证码)</template
+      >
       <template v-slot:countdown="child">
         请等待{{ child.data.interval - child.data.seconds }}秒
       </template>
@@ -148,12 +158,12 @@ export default {
   data() {
     return {
       form: {
-        phone: '',
+        phone: ''
       }
     }
   },
   methods: {
-    getCode () {
+    getCode() {
       if (this.form.phone.length < 7) {
         alert('请填写正确的手机号码')
         throw '请填写正确的手机号码' // 抛出错误，中断 Promise chain
@@ -190,6 +200,7 @@ export default {
 工程基于 https://github.com/FEMessage/vue-sfc-cli 创建的。
 
 简单使用示例：
+
 ```
 # Install dependency
 yarn
