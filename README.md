@@ -1,8 +1,8 @@
 # vue-get-code (获取短信验证码的 vue 组件)
 
-[![NPM Download](https://badgen.net/npm/dm/vue-get-code)](https://www.npmjs.com/package/vue-get-code)
 [![NPM Version](https://badge.fury.io/js/vue-get-code.svg)](https://www.npmjs.com/package/vue-get-code)
 [![NPM License](https://badgen.net/npm/license/vue-get-code)](https://github.com/En777/vue-get-code/blob/main/LICENSE)
+[![NPM Download](https://badgen.net/npm/dm/vue-get-code)](https://www.npmjs.com/package/vue-get-code)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/En777/vue-get-code/pulls)
 
 ## Table of Contents 目录
@@ -133,6 +133,15 @@ disable: {
   default: false,
   type: Boolean
 }
+```
+
+vue-get-code 组件的 event 事件
+
+```
+countdownBegin
+countdownUpdate
+countdownEnd
+getCodeError
 ```
 
 ### 高级：配置默认文字、倒计时文字、表单验证与获取验证码结合、event 事件
