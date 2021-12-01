@@ -56,13 +56,6 @@ export default {
 
       this.seconds = 0
       this.enableCountdown = true
-      this.timer = setInterval(() => {
-        this.seconds++
-
-        if (this.seconds >= this.interval || this.disable) {
-          this.reset()
-        }
-      }, 1000)
 
       // vue-sfc-cli 对 async await 的支持还有问题，暂时换成 Promise 写法
       new Promise((resolve, reject) => {
@@ -74,9 +67,19 @@ export default {
         }
 
         resolve(result)
-      }).catch(() => {
-        this.reset()
       })
+        .then(() => {
+          this.timer = setInterval(() => {
+            this.seconds++
+
+            if (this.seconds >= this.interval || this.disable) {
+              this.reset()
+            }
+          }, 1000)
+        })
+        .catch(() => {
+          this.reset()
+        })
     },
     reset() {
       clearInterval(this.timer)
