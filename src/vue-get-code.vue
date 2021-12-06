@@ -1,20 +1,11 @@
 <template>
   <span
     class="vue-get-code"
-    v-bind="$attrs"
     :class="[disable && 'disable', enableCountdown && 'enable-countdown']"
-    v-on="$listeners"
     @click="click"
   >
-    <slot
-      v-if="!enableCountdown"
-      name="default"
-      :data="{interval, seconds, count}"
-      >获取验证码</slot
-    >
-    <slot v-if="enableCountdown" name="countdown" :data="{interval, seconds}"
-      >{{ interval - seconds }}S</slot
-    >
+    <slot v-if="!enableCountdown" name="default" :data="{interval, seconds, count}">获取验证码</slot>
+    <slot v-if="enableCountdown" name="countdown" :data="{interval, seconds}">{{ interval - seconds }}S</slot>
   </span>
 </template>
 
