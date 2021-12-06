@@ -15,15 +15,6 @@
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   var script = {
     name: 'VueGetCode',
     props: {
@@ -213,13 +204,13 @@
 
     var _c = _vm._self._c || _h;
 
-    return _c("span", _vm._g(_vm._b({
+    return _c("span", {
       staticClass: "vue-get-code",
       "class": [_vm.disable && "disable", _vm.enableCountdown && "enable-countdown"],
       on: {
         click: _vm.click
       }
-    }, "span", _vm.$attrs, false), _vm.$listeners), [!_vm.enableCountdown ? _vm._t("default", [_vm._v("获取验证码")], {
+    }, [!_vm.enableCountdown ? _vm._t("default", [_vm._v("获取验证码")], {
       data: {
         interval: _vm.interval,
         seconds: _vm.seconds,
