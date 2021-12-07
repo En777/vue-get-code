@@ -20,6 +20,10 @@
 
 vue-get-code 封装了发送验证码、倒计时，倒计时完成后可以重新发送……
 
+[demo/example](https://en777.github.io/vue-get-code/#/Demo/basic)
+
+[doc/文档](https://en777.github.io/vue-get-code/#/Components?id=vuegetcode)
+
 使用很简单，支持灵活的配置，支持复杂的场景。
 获取短信验证码、获取邮件验证码，都可以使用这个组件。
 
