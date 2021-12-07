@@ -18,40 +18,18 @@
 
 ## Introduction 介绍
 
-获取短信验证码的 vue 组件（封装了发送验证码、倒计时，倒计时完成后可以重新发送……）。
+vue-get-code 封装了发送验证码、倒计时，倒计时完成后可以重新发送……
 
-非常简单，用起来很方便，非常灵活，支持复杂的场景。
-
+使用很简单，支持灵活的配置，支持复杂的场景。
 获取短信验证码、获取邮件验证码，都可以使用这个组件。
 
-## Features 特点
-
-vue-get-code 是一个非常灵活的获取短信验证码组件。
-
-支持灵活的配置：
-
-- 倒计时的秒数，默认 60 秒，可按需设置
-- 发送验证码需要 ajax 调用接口，可以在 getCode() 函数中实现，过程由开发者实现，非常灵活，返回一个 Promise 对象即可，组件会等待函数，成功后会开始倒计时，失败了会结束倒计时。在此函数中，也可以做表单验证，真的非常灵活。
-- 调用者可以控制组件是否禁用
-- 发送验证码前、倒计时、禁用，多个状态都有对应 class，控制样式非常方便
-- 可以定制发验证码之前的文字
-- 可以定制倒计时的文案
-- 倒计时有事件触发(countdownBegin/countdownUpdate/countdownEnd)
-- 获取验证码接口报错有事件触发(getCodeError)
-
-## Install 安装
-
-`npm install vue-get-code`
-
-## Usage 使用
-
-### 基本用法
+快速使用：
 
 ```vue
 <template>
   <form>
-    <input placeholder="phone" />
-    <vue-get-code :getCode="getCode" />
+    <input placeholder="phone" value="130xxxx" />
+    <vue-get-code :getCode="getCode"></vue-get-code>
   </form>
 </template>
 
@@ -83,13 +61,34 @@ export default {
 </style>
 ```
 
+## Features 特点
+
+vue-get-code 是一个非常灵活的获取短信验证码组件。
+
+支持灵活的配置：
+
+- 倒计时的秒数，默认 60 秒，可按需设置
+- 发送验证码需要 ajax 调用接口，可以在 getCode() 函数中实现，过程由开发者实现，非常灵活，返回一个 Promise 对象即可，组件会等待函数，成功后会开始倒计时，失败了会结束倒计时。在此函数中，也可以做表单验证，真的非常灵活。
+- 调用者可以控制组件是否禁用
+- 发送验证码前、倒计时、禁用，多个状态都有对应 class，控制样式非常方便
+- 可以定制发验证码之前的文字
+- 可以定制倒计时的文案
+- 倒计时有事件触发(countdownBegin/countdownUpdate/countdownEnd)
+- 获取验证码接口报错有事件触发(getCodeError)
+
+## Install 安装
+
+`npm install vue-get-code`
+
+## Usage 使用
+
 ### 修改配置，把倒计时改为 120 秒
 
 ```vue
 <template>
   <form>
-    <input placeholder="phone" />
-    <vue-get-code :getCode="getCode" :interval="120" />
+    <input placeholder="phone" value="130xxxx" />
+    <vue-get-code :getCode="getCode" :interval="120"></vue-get-code>
   </form>
 </template>
 
@@ -149,7 +148,7 @@ getCodeError
 ```vue
 <template>
   <form>
-    <input placeholder="phone" />
+    <input placeholder="phone" value="130xxxx" />
     <vue-get-code :getCode="getCode" :interval="3">
       <template v-slot:default="child">
         {{ child.data.count <= 0 ? '获取验证码' : '重新获取' }}

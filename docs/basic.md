@@ -3,8 +3,8 @@
 ```vue
 <template>
   <form>
-    <input placeholder="phone">
-    <vue-get-code :getCode="getCode"/>
+    <input placeholder="phone" value="130xxxx" />
+    <vue-get-code :getCode="getCode"></vue-get-code>
   </form>
 </template>
 
@@ -38,8 +38,8 @@ export default {
 ```vue
 <template>
   <form>
-    <input placeholder="phone">
-    <vue-get-code :getCode="getCode" :interval="120" />
+    <input placeholder="phone" value="130xxxx" />
+    <vue-get-code :getCode="getCode" :interval="120"></vue-get-code>
   </form>
 </template>
 
@@ -72,7 +72,7 @@ export default {
 ```vue
 <template>
   <form>
-    <input placeholder="phone">
+    <input placeholder="phone" value="130xxxx" />
     <vue-get-code :getCode="getCode" :interval="3">
       <template v-slot:default="child">
         {{ child.data.count <= 0 ? '获取验证码' : '重新获取' }}
